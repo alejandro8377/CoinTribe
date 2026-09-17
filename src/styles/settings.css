@@ -1,0 +1,44 @@
+/* CoinTribe · configuración */
+
+.ajustes-layout {
+  max-width: 760px;
+}
+
+#estado-ajustes:not(:empty) {
+  margin-top: 16px;
+}
+
+.ajustes-subtexto {
+  color: var(--ct-ink-soft);
+  margin: 4px 0 18px;
+}
+
+.ajustes-layout h2 {
+  margin-bottom: 16px;
+}
+
+.ajustes-columnas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.ajustes-layout [id^="resultado-"]:not(:empty) {
+  margin: 4px 0 16px;
+}
+
+.ajustes-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ajustes-zona-datos {
+  border-left: 4px solid var(--ct-coin);
+}
+
+@media (max-width: 620px) {
+  .ajustes-columnas {
+    grid-template-columns: 1fr;
+  }
+}
