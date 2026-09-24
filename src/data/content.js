@@ -1,23 +1,23 @@
-/* CoinTribe · datos de ejemplo.
-   Esta versión es solo la parte visual: no hay API ni persistencia,
-   las pantallas se alimentan de estas constantes. */
+/* CoinTribe · datos de ejemplo (frontend).
+   El backend Spring Boot ya expone API real en /api/*.
+   Estas constantes sirven de fallback visual y para la portada. */
 
 export const students = [
   {
     "id": "1",
     "nombre": "Integrante 1",
-    "rol": "Acceso y autenticación",
-    "descripcion": "Pantallas de entrada a CoinTribe: inicio de sesión con intentos limitados y registro con validaciones.",
-    "pantalla1": "Iniciar sesión",
+    "rol": "Acceso, autenticación y perfil",
+    "descripcion": "Login, registro con validaciones, perfil del usuario y configuración de cuenta.",
+    "pantalla1": "Iniciar sesión / Crear cuenta",
     "ruta1": "/login",
-    "pantalla2": "Crear cuenta",
-    "ruta2": "/crear-cuenta"
+    "pantalla2": "Perfil y Configuración",
+    "ruta2": "/perfil"
   },
   {
     "id": "2",
     "nombre": "Integrante 2",
-    "rol": "Panel y aprendizaje",
-    "descripcion": "Resumen de ahorro del usuario, consejos rotativos y catálogo de cursos con buscador y progreso.",
+    "rol": "Panel, cursos y aprendizaje",
+    "descripcion": "Resumen de ahorro, consejos rotativos, catálogo de cursos con buscador y progreso de lecciones.",
     "pantalla1": "Inicio",
     "ruta1": "/inicio",
     "pantalla2": "Cursos",
@@ -26,22 +26,12 @@ export const students = [
   {
     "id": "3",
     "nombre": "Integrante 3",
-    "rol": "Retos y comunidad",
-    "descripcion": "Gamificación con retos de ahorro, logros desbloqueables y foro de publicaciones con comentarios.",
+    "rol": "Retos, comunidad y gamificación",
+    "descripcion": "Retos de ahorro, depósitos, logros desbloqueables y foro de publicaciones con likes y comentarios.",
     "pantalla1": "Retos",
     "ruta1": "/retos",
     "pantalla2": "Comunidad",
     "ruta2": "/comunidad"
-  },
-  {
-    "id": "4",
-    "nombre": "Integrante 4",
-    "rol": "Perfil y preferencias",
-    "descripcion": "Estadísticas personales del usuario y panel de configuración de cuenta, notificaciones y privacidad.",
-    "pantalla1": "Perfil",
-    "ruta1": "/perfil",
-    "pantalla2": "Configuración",
-    "ruta2": "/configuracion"
   }
 ];
 
