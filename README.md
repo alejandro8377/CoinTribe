@@ -12,6 +12,8 @@ Equipo actual: **3 integrantes**.
 
 La experiencia combina aprendizaje breve, retos medibles y reconocimiento automático para que mejorar las finanzas se sienta como un progreso compartido.
 
+**Mantenimiento:** sebastianCardona · `scardona12345678@cesde.net`
+
 ---
 
 ## Idea del proyecto

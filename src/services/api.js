@@ -2,6 +2,7 @@
  * Capa de acceso a la API de CoinTribe (Spring Boot).
  * Base URL por defecto: http://localhost:8080
  * Puedes cambiarla con la variable de entorno VITE_API_URL.
+ * Todas las pantallas comparten este punto de entrada para mantener una sola voz de red.
  */
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";

@@ -1,6 +1,7 @@
 /* CoinTribe · datos de ejemplo (frontend).
    El backend Spring Boot ya expone API real en /api/*.
    Estas constantes sirven de fallback visual y para la portada. */
+/* Firma del equipo: contenido breve, accionable y pensado para avanzar en tribu. */
 
 export const coinTribeIdentity = {
   nombre: "CoinTribe",

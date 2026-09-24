@@ -13,3 +13,5 @@ backend/.idea
 *.swp
 .fleet
 coverage
+.history
+*.bak

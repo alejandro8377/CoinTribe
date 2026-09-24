@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Servicio de logros. Evalúa automáticamente si el usuario cumple
  * las condiciones de cada logro y lo desbloquea.
+ * El desbloqueo queda registrado para que la progresión sea visible y auditable.
  */
 @Service
 public class AchievementService {
