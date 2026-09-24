@@ -9,3 +9,7 @@ backend/.idea
 .idea
 *.iml
 .vscode
+*.tmp
+*.swp
+.fleet
+coverage

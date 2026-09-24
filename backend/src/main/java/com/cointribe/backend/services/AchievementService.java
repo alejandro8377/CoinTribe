@@ -6,6 +6,8 @@ import com.cointribe.backend.models.UserAchievement;
 import com.cointribe.backend.repositories.AchievementRepository;
 import com.cointribe.backend.repositories.UserAchievementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import java.util.List;
  */
 @Service
 public class AchievementService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AchievementService.class);
 
     private final AchievementRepository achievementRepository;
     private final UserAchievementRepository userAchievementRepository;
@@ -54,6 +58,7 @@ public class AchievementService {
                 ua.setUser(user);
                 ua.setAchievement(ach);
                 userAchievementRepository.save(ua);
+                LOGGER.info("Logro desbloqueado: userId={}, achievementId={}", user.getId(), ach.getId());
             }
         }
     }

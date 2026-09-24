@@ -2,6 +2,13 @@
    El backend Spring Boot ya expone API real en /api/*.
    Estas constantes sirven de fallback visual y para la portada. */
 
+export const coinTribeIdentity = {
+  nombre: "CoinTribe",
+  lema: "Aprende, ahorra y avanza en tribu.",
+  principio: "Cada pequeño hábito cuenta cuando lo conviertes en progreso.",
+  colorAcento: "#e7b84b"
+};
+
 export const students = [
   {
     "id": "1",

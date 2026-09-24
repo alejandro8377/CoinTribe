@@ -2,11 +2,15 @@
 
 Aplicación de **educación financiera personal** con gamificación y comunidad.
 
+> **Sello CoinTribe:** aprende, ahorra y avanza en tribu. Cada pequeño hábito cuenta cuando lo conviertes en progreso.
+
 Stack:
 - **Frontend:** React 18 + Vite + React Router
 - **Backend:** Spring Boot (Java 21) + JPA + H2
 
 Equipo actual: **3 integrantes**.
+
+La experiencia combina aprendizaje breve, retos medibles y reconocimiento automático para que mejorar las finanzas se sienta como un progreso compartido.
 
 ---
 

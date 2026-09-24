@@ -5,25 +5,40 @@
  */
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const CLIENT_NAME = "CoinTribe-Web";
+const REQUEST_TIMEOUT_MS = 10000;
 
 async function request(path, options = {}) {
   const url = `${BASE_URL}${path}`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   const config = {
     headers: {
       "Content-Type": "application/json",
+      "X-CoinTribe-Client": CLIENT_NAME,
       ...(options.headers || {}),
     },
+    signal: controller.signal,
     ...options,
   };
 
-  const response = await fetch(url, config);
-  const data = await response.json().catch(() => ({}));
+  try {
+    const response = await fetch(url, config);
+    const data = await response.json().catch(() => ({}));
 
-  if (!response.ok) {
-    const message = data.error || data.message || `Error HTTP ${response.status}`;
-    throw new Error(message);
+    if (!response.ok) {
+      const message = data.error || data.message || `Error HTTP ${response.status}`;
+      throw new Error(message);
+    }
+    return data;
+  } catch (error) {
+    if (error.name === "AbortError") {
+      throw new Error("CoinTribe no recibió respuesta del backend a tiempo");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
-  return data;
 }
 
 // ——— Usuarios ———
