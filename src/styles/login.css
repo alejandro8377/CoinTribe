@@ -1,7 +1,0 @@
-/* CoinTribe · ajustes propios de la pantalla de inicio de sesión.
-   La estructura de la tarjeta de acceso vive en auth.css, que
-   comparten el login y el registro. */
-
-.acceso-form__estado [role="alert"] {
-  font-weight: 600;
-}

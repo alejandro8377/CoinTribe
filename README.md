@@ -1,11 +1,10 @@
 # CoinTribe
 
-Aplicación de **educación financiera personal** con gamificación y comunidad.
+API backend de **educación financiera personal** con gamificación y comunidad.
 
 > **Sello CoinTribe:** aprende, ahorra y avanza en tribu. Cada pequeño hábito cuenta cuando lo conviertes en progreso.
 
 Stack:
-- **Frontend:** React 18 + Vite + React Router
 - **Backend:** Spring Boot (Java 21) + JPA + H2
 
 Equipo actual: **3 integrantes**.
@@ -30,7 +29,7 @@ CoinTribe ayuda a las personas a mejorar sus hábitos de dinero mediante:
 
 ## Cómo ejecutar
 
-### Backend (Spring Boot)
+### Ejecutar el backend (Spring Boot)
 
 ```bash
 cd backend
@@ -40,18 +39,6 @@ cd backend
 API disponible en `http://localhost:8080`  
 Consola H2: `http://localhost:8080/h2-console`  
 (JDBC URL: `jdbc:h2:mem:cointribedb`, user: `sa`, password vacía)
-
-### Frontend (React)
-
-```bash
-npm install
-npm run dev
-```
-
-Abre `http://localhost:5173`.
-
-La capa de API del frontend apunta por defecto a `http://localhost:8080`.  
-Puedes cambiarla con la variable de entorno `VITE_API_URL`.
 
 ---
 
@@ -117,7 +104,7 @@ Además, el `AchievementService` evalúa automáticamente condiciones (ahorro, l
 
 ```
 CoinTribe/
-├── backend/                  # Spring Boot
+├── backend/                  # Spring Boot API
 │   └── src/main/java/com/cointribe/backend/
 │       ├── models/           # User, Course, Challenge, Post, Achievement, Coin…
 │       ├── repositories/
@@ -125,14 +112,7 @@ CoinTribe/
 │       ├── controllers/      # API REST
 │       ├── config/           # DataInitializer (seed)
 │       └── exceptions/       # BusinessException + handler global
-├── src/                      # React
-│   ├── pages/
-│   ├── components/
-│   ├── data/content.js
-│   ├── services/api.js       # Cliente HTTP hacia el backend
-│   ├── styles/
-│   └── utils/
-├── package.json
+├── .gitignore
 └── README.md
 ```
 
@@ -140,6 +120,5 @@ CoinTribe/
 
 ## Notas
 
-- El frontend sigue usando datos mock en varias pantallas; la capa `src/services/api.js` ya está lista para conectar Login, Registro, Retos, Comunidad, etc.
 - Las contraseñas se guardan en texto plano solo con fines académicos. En producción deben hashearse (BCrypt).
 - H2 es en memoria: los datos se reinician al apagar el backend.
