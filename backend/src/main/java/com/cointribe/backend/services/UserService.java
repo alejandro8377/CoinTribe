@@ -147,4 +147,72 @@ public class UserService {
         achievementService.evaluateAndUnlock(saved);
         return saved;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Actualización completa del usuario (campos permitidos).
+     */
+    @Transactional
+    public User updateUser(Long userId, String nombre, String email, Double meta, Integer nivel) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            user.setNombre(nombre.trim());
+        }
+        if (email != null && !email.trim().isEmpty()) {
+            String emailNorm = email.trim().toLowerCase();
+            if (!EMAIL_PATTERN.matcher(emailNorm).matches()) {
+                throw new BusinessException("El correo electrónico no tiene un formato válido.");
+            }
+            if (!emailNorm.equals(user.getEmail()) && userRepository.existsByEmail(emailNorm)) {
+                throw new BusinessException("Ya existe una cuenta registrada con ese correo electrónico.");
+            }
+            user.setEmail(emailNorm);
+        }
+        if (meta != null) {
+            if (meta <= 0) {
+                throw new BusinessException("La meta de ahorro debe ser mayor a cero.");
+            }
+            user.setMeta(meta);
+        }
+        if (nivel != null && nivel > 0) {
+            user.setNivel(nivel);
+        }
+        return userRepository.save(user);
+    }
+
+    /**
+     * Soft-delete: desactiva la cuenta en lugar de borrarla físicamente.
+     */
+    @Transactional
+    public User deactivateUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+        user.setActivo(false);
+        return userRepository.save(user);
+    }
+
+    /**
+     * Eliminación física del usuario.
+     */
+    @Transactional
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new BusinessException("Usuario no encontrado.");
+        }
+        userRepository.deleteById(userId);
+    }
+
+    /**
+     * Reactiva una cuenta desactivada.
+     */
+    @Transactional
+    public User activateUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+        user.setActivo(true);
+        return userRepository.save(user);
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

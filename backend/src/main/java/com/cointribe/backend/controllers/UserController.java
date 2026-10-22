@@ -81,4 +81,43 @@ public class UserController {
         user.setPassword(null);
         return ResponseEntity.ok(user);
     }
+<<<<<<< HEAD
+=======
+
+    /** PUT /api/users/{id} — Actualización completa del usuario */
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id,
+                                       @RequestBody Map<String, Object> body) {
+        String nombre = body.get("nombre") != null ? body.get("nombre").toString() : null;
+        String email = body.get("email") != null ? body.get("email").toString() : null;
+        Double meta = body.get("meta") != null ? Double.valueOf(body.get("meta").toString()) : null;
+        Integer nivel = body.get("nivel") != null ? Integer.valueOf(body.get("nivel").toString()) : null;
+        User user = userService.updateUser(id, nombre, email, meta, nivel);
+        user.setPassword(null);
+        return ResponseEntity.ok(user);
+    }
+
+    /** DELETE /api/users/{id} — Eliminación física */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    /** PUT /api/users/{id}/deactivate — Soft-delete (desactivar cuenta) */
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<User> deactivate(@PathVariable Long id) {
+        User user = userService.deactivateUser(id);
+        user.setPassword(null);
+        return ResponseEntity.ok(user);
+    }
+
+    /** PUT /api/users/{id}/activate — Reactivar cuenta */
+    @PutMapping("/{id}/activate")
+    public ResponseEntity<User> activate(@PathVariable Long id) {
+        User user = userService.activateUser(id);
+        user.setPassword(null);
+        return ResponseEntity.ok(user);
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

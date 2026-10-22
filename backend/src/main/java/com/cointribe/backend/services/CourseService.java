@@ -89,4 +89,72 @@ public class CourseService {
     public Course saveCourse(Course course) {
         return courseRepository.save(course);
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Crear un nuevo curso.
+     */
+    @Transactional
+    public Course createCourse(String titulo, String tema, String descripcion, Integer totalLecciones) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new BusinessException("El título del curso es obligatorio.");
+        }
+        if (totalLecciones != null && totalLecciones < 0) {
+            throw new BusinessException("El total de lecciones no puede ser negativo.");
+        }
+
+        Course course = new Course();
+        course.setTitulo(titulo.trim());
+        course.setTema(tema != null ? tema.trim() : null);
+        course.setDescripcion(descripcion != null ? descripcion.trim() : null);
+        course.setProgreso(0);
+        course.setTotalLecciones(totalLecciones != null ? totalLecciones : 0);
+        return courseRepository.save(course);
+    }
+
+    /**
+     * Actualizar un curso existente.
+     */
+    @Transactional
+    public Course updateCourse(Long id, String titulo, String tema, String descripcion,
+                               Integer totalLecciones, Integer progreso) {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Curso no encontrado."));
+
+        if (titulo != null && !titulo.trim().isEmpty()) {
+            course.setTitulo(titulo.trim());
+        }
+        if (tema != null) {
+            course.setTema(tema.trim());
+        }
+        if (descripcion != null) {
+            course.setDescripcion(descripcion.trim());
+        }
+        if (totalLecciones != null) {
+            if (totalLecciones < 0) {
+                throw new BusinessException("El total de lecciones no puede ser negativo.");
+            }
+            course.setTotalLecciones(totalLecciones);
+        }
+        if (progreso != null) {
+            if (progreso < 0 || progreso > 100) {
+                throw new BusinessException("El progreso del curso debe estar entre 0 y 100.");
+            }
+            course.setProgreso(progreso);
+        }
+        return courseRepository.save(course);
+    }
+
+    /**
+     * Eliminar un curso.
+     */
+    @Transactional
+    public void deleteCourse(Long id) {
+        if (!courseRepository.existsById(id)) {
+            throw new BusinessException("Curso no encontrado.");
+        }
+        courseRepository.deleteById(id);
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

@@ -4,6 +4,10 @@ import com.cointribe.backend.models.Course;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
+=======
+import org.springframework.http.HttpStatus;
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,4 +58,41 @@ public class CourseController {
         user.setPassword(null);
         return ResponseEntity.ok(user);
     }
+<<<<<<< HEAD
+=======
+
+    /** POST /api/courses — Crear curso */
+    @PostMapping
+    public ResponseEntity<Course> create(@RequestBody Map<String, Object> body) {
+        String titulo = body.get("titulo") != null ? body.get("titulo").toString() : null;
+        String tema = body.get("tema") != null ? body.get("tema").toString() : null;
+        String descripcion = body.get("descripcion") != null ? body.get("descripcion").toString() : null;
+        Integer totalLecciones = body.get("totalLecciones") != null
+                ? Integer.valueOf(body.get("totalLecciones").toString()) : null;
+        Course course = courseService.createCourse(titulo, tema, descripcion, totalLecciones);
+        return ResponseEntity.status(HttpStatus.CREATED).body(course);
+    }
+
+    /** PUT /api/courses/{id} — Actualizar curso */
+    @PutMapping("/{id}")
+    public ResponseEntity<Course> update(@PathVariable Long id,
+                                         @RequestBody Map<String, Object> body) {
+        String titulo = body.get("titulo") != null ? body.get("titulo").toString() : null;
+        String tema = body.get("tema") != null ? body.get("tema").toString() : null;
+        String descripcion = body.get("descripcion") != null ? body.get("descripcion").toString() : null;
+        Integer totalLecciones = body.get("totalLecciones") != null
+                ? Integer.valueOf(body.get("totalLecciones").toString()) : null;
+        Integer progreso = body.get("progreso") != null
+                ? Integer.valueOf(body.get("progreso").toString()) : null;
+        Course course = courseService.updateCourse(id, titulo, tema, descripcion, totalLecciones, progreso);
+        return ResponseEntity.ok(course);
+    }
+
+    /** DELETE /api/courses/{id} — Eliminar curso */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

@@ -128,4 +128,76 @@ public class ChallengeService {
     public Challenge saveChallenge(Challenge challenge) {
         return challengeRepository.save(challenge);
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Crear un nuevo reto.
+     */
+    @Transactional
+    public Challenge createChallenge(String titulo, String descripcion, Double metaAhorro,
+                                     Integer duracionDias, Boolean activo) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new BusinessException("El título del reto es obligatorio.");
+        }
+        if (metaAhorro != null && metaAhorro <= 0) {
+            throw new BusinessException("La meta de ahorro debe ser mayor a cero.");
+        }
+        if (duracionDias != null && duracionDias <= 0) {
+            throw new BusinessException("La duración debe ser mayor a cero días.");
+        }
+
+        Challenge challenge = new Challenge();
+        challenge.setTitulo(titulo.trim());
+        challenge.setDescripcion(descripcion != null ? descripcion.trim() : null);
+        challenge.setMetaAhorro(metaAhorro);
+        challenge.setDuracionDias(duracionDias);
+        challenge.setActivo(activo != null ? activo : true);
+        return challengeRepository.save(challenge);
+    }
+
+    /**
+     * Actualizar un reto existente.
+     */
+    @Transactional
+    public Challenge updateChallenge(Long id, String titulo, String descripcion,
+                                     Double metaAhorro, Integer duracionDias, Boolean activo) {
+        Challenge challenge = challengeRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Reto no encontrado."));
+
+        if (titulo != null && !titulo.trim().isEmpty()) {
+            challenge.setTitulo(titulo.trim());
+        }
+        if (descripcion != null) {
+            challenge.setDescripcion(descripcion.trim());
+        }
+        if (metaAhorro != null) {
+            if (metaAhorro <= 0) {
+                throw new BusinessException("La meta de ahorro debe ser mayor a cero.");
+            }
+            challenge.setMetaAhorro(metaAhorro);
+        }
+        if (duracionDias != null) {
+            if (duracionDias <= 0) {
+                throw new BusinessException("La duración debe ser mayor a cero días.");
+            }
+            challenge.setDuracionDias(duracionDias);
+        }
+        if (activo != null) {
+            challenge.setActivo(activo);
+        }
+        return challengeRepository.save(challenge);
+    }
+
+    /**
+     * Eliminar un reto.
+     */
+    @Transactional
+    public void deleteChallenge(Long id) {
+        if (!challengeRepository.existsById(id)) {
+            throw new BusinessException("Reto no encontrado.");
+        }
+        challengeRepository.deleteById(id);
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

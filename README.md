@@ -51,6 +51,7 @@ Consola H2: `http://localhost:8080/h2-console`
 
 ---
 
+<<<<<<< HEAD
 ## Endpoints principales del backend
 
 | Método | Ruta | Descripción |
@@ -73,6 +74,78 @@ Consola H2: `http://localhost:8080/h2-console`
 | GET  | `/api/achievements` | Listar logros |
 | GET  | `/api/achievements/user/{userId}` | Logros de un usuario |
 | GET  | `/api/coins` | Coins de ejemplo (CRUD original) |
+=======
+## Endpoints principales del backend (CRUD completo)
+
+### Usuarios `/api/users`
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET  | `/api/users` | Listar todos los usuarios |
+| GET  | `/api/users/{id}` | Obtener usuario por ID |
+| POST | `/api/users/register` | Registrar usuario |
+| POST | `/api/users/login` | Iniciar sesión |
+| PUT  | `/api/users/{id}` | Actualizar usuario (nombre, email, meta, nivel) |
+| PUT  | `/api/users/{id}/profile` | Actualizar perfil (nombre, meta) |
+| PUT  | `/api/users/{id}/password` | Cambiar contraseña |
+| POST | `/api/users/{id}/ahorro` | Sumar ahorro |
+| PUT  | `/api/users/{id}/deactivate` | Desactivar cuenta (soft-delete) |
+| PUT  | `/api/users/{id}/activate` | Reactivar cuenta |
+| DELETE | `/api/users/{id}` | Eliminar usuario (físico) |
+
+### Cursos `/api/courses`
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET  | `/api/courses` | Listar todos los cursos |
+| GET  | `/api/courses/{id}` | Obtener curso por ID |
+| GET  | `/api/courses/tema/{tema}` | Filtrar cursos por tema |
+| POST | `/api/courses` | Crear curso |
+| PUT  | `/api/courses/{id}` | Actualizar curso |
+| PUT  | `/api/courses/{id}/progress` | Actualizar progreso (0-100, solo avanzar) |
+| POST | `/api/courses/complete-lesson` | Marcar lecciones completadas |
+| DELETE | `/api/courses/{id}` | Eliminar curso |
+
+### Retos `/api/challenges`
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET  | `/api/challenges` | Listar retos activos |
+| GET  | `/api/challenges/all` | Listar todos los retos |
+| GET  | `/api/challenges/{id}` | Obtener reto por ID |
+| GET  | `/api/challenges/user/{userId}` | Retos de un usuario |
+| POST | `/api/challenges` | Crear reto |
+| PUT  | `/api/challenges/{id}` | Actualizar reto |
+| POST | `/api/challenges/{id}/join` | Unirse a un reto |
+| POST | `/api/challenges/{id}/deposit` | Registrar depósito en un reto |
+| DELETE | `/api/challenges/{id}` | Eliminar reto |
+
+### Publicaciones `/api/posts`
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET  | `/api/posts` | Listar publicaciones |
+| GET  | `/api/posts/{id}` | Obtener publicación por ID |
+| POST | `/api/posts` | Crear publicación |
+| PUT  | `/api/posts/{id}` | Actualizar publicación |
+| POST | `/api/posts/{id}/like` | Dar like (una sola vez por usuario) |
+| DELETE | `/api/posts/{id}` | Eliminar publicación |
+
+### Logros `/api/achievements`
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET  | `/api/achievements` | Listar logros |
+| GET  | `/api/achievements/{id}` | Obtener logro por ID |
+| GET  | `/api/achievements/user/{userId}` | Logros de un usuario |
+| POST | `/api/achievements` | Crear logro |
+| PUT  | `/api/achievements/{id}` | Actualizar logro |
+| DELETE | `/api/achievements/{id}` | Eliminar logro |
+
+### Coins `/api/coins`
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET  | `/api/coins` | Listar monedas |
+| GET  | `/api/coins/{id}` | Obtener moneda por ID |
+| POST | `/api/coins` | Crear moneda |
+| PUT  | `/api/coins/{id}` | Actualizar moneda |
+| DELETE | `/api/coins/{id}` | Eliminar moneda |
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 
 ---
 

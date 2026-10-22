@@ -61,4 +61,39 @@ public class ChallengeController {
     public ResponseEntity<List<UserChallenge>> getUserChallenges(@PathVariable Long userId) {
         return ResponseEntity.ok(challengeService.getUserChallenges(userId));
     }
+<<<<<<< HEAD
+=======
+
+    /** POST /api/challenges — Crear reto */
+    @PostMapping
+    public ResponseEntity<Challenge> create(@RequestBody Map<String, Object> body) {
+        String titulo = body.get("titulo") != null ? body.get("titulo").toString() : null;
+        String descripcion = body.get("descripcion") != null ? body.get("descripcion").toString() : null;
+        Double metaAhorro = body.get("metaAhorro") != null ? Double.valueOf(body.get("metaAhorro").toString()) : null;
+        Integer duracionDias = body.get("duracionDias") != null ? Integer.valueOf(body.get("duracionDias").toString()) : null;
+        Boolean activo = body.get("activo") != null ? Boolean.valueOf(body.get("activo").toString()) : true;
+        Challenge challenge = challengeService.createChallenge(titulo, descripcion, metaAhorro, duracionDias, activo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(challenge);
+    }
+
+    /** PUT /api/challenges/{id} — Actualizar reto */
+    @PutMapping("/{id}")
+    public ResponseEntity<Challenge> update(@PathVariable Long id,
+                                            @RequestBody Map<String, Object> body) {
+        String titulo = body.get("titulo") != null ? body.get("titulo").toString() : null;
+        String descripcion = body.get("descripcion") != null ? body.get("descripcion").toString() : null;
+        Double metaAhorro = body.get("metaAhorro") != null ? Double.valueOf(body.get("metaAhorro").toString()) : null;
+        Integer duracionDias = body.get("duracionDias") != null ? Integer.valueOf(body.get("duracionDias").toString()) : null;
+        Boolean activo = body.get("activo") != null ? Boolean.valueOf(body.get("activo").toString()) : null;
+        Challenge challenge = challengeService.updateChallenge(id, titulo, descripcion, metaAhorro, duracionDias, activo);
+        return ResponseEntity.ok(challenge);
+    }
+
+    /** DELETE /api/challenges/{id} — Eliminar reto */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        challengeService.deleteChallenge(id);
+        return ResponseEntity.noContent().build();
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

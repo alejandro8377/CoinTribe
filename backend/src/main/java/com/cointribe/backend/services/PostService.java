@@ -86,4 +86,47 @@ public class PostService {
     public Post savePost(Post post) {
         return postRepository.save(post);
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Actualizar una publicación existente.
+     */
+    @Transactional
+    public Post updatePost(Long id, String autor, String etiqueta, String titulo, String cuerpo) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Publicación no encontrada."));
+
+        if (autor != null && !autor.trim().isEmpty()) {
+            post.setAutor(autor.trim());
+        }
+        if (etiqueta != null) {
+            post.setEtiqueta(etiqueta.trim());
+        }
+        if (titulo != null) {
+            if (titulo.trim().length() < 5) {
+                throw new BusinessException("El título debe tener al menos 5 caracteres.");
+            }
+            post.setTitulo(titulo.trim());
+        }
+        if (cuerpo != null) {
+            if (cuerpo.trim().length() < 10) {
+                throw new BusinessException("El contenido de la publicación debe tener al menos 10 caracteres.");
+            }
+            post.setCuerpo(cuerpo.trim());
+        }
+        return postRepository.save(post);
+    }
+
+    /**
+     * Eliminar una publicación.
+     */
+    @Transactional
+    public void deletePost(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new BusinessException("Publicación no encontrada.");
+        }
+        postRepository.deleteById(id);
+    }
+>>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }
