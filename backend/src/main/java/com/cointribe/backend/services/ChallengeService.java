@@ -128,8 +128,6 @@ public class ChallengeService {
     public Challenge saveChallenge(Challenge challenge) {
         return challengeRepository.save(challenge);
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Crear un nuevo reto.
@@ -199,5 +197,4 @@ public class ChallengeService {
         }
         challengeRepository.deleteById(id);
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

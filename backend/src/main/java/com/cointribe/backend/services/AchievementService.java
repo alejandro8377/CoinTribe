@@ -1,9 +1,6 @@
 package com.cointribe.backend.services;
 
-<<<<<<< HEAD
-=======
 import com.cointribe.backend.exceptions.BusinessException;
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 import com.cointribe.backend.models.Achievement;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.models.UserAchievement;
@@ -16,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.Optional;
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 
 /**
  * Servicio de logros. Evalúa automáticamente si el usuario cumple
@@ -91,8 +85,6 @@ public class AchievementService {
     public Achievement save(Achievement achievement) {
         return achievementRepository.save(achievement);
     }
-<<<<<<< HEAD
-=======
 
     public Optional<Achievement> getById(Long id) {
         return achievementRepository.findById(id);
@@ -173,5 +165,4 @@ public class AchievementService {
         }
         achievementRepository.deleteById(id);
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

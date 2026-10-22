@@ -147,8 +147,6 @@ public class UserService {
         achievementService.evaluateAndUnlock(saved);
         return saved;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Actualización completa del usuario (campos permitidos).
@@ -214,5 +212,4 @@ public class UserService {
         user.setActivo(true);
         return userRepository.save(user);
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

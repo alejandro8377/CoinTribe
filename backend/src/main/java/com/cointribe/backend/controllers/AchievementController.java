@@ -4,18 +4,12 @@ import com.cointribe.backend.models.Achievement;
 import com.cointribe.backend.models.UserAchievement;
 import com.cointribe.backend.services.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
 import org.springframework.http.HttpStatus;
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.Map;
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 
 @RestController
 @RequestMapping("/api/achievements")
@@ -34,8 +28,6 @@ public class AchievementController {
         return ResponseEntity.ok(achievementService.getAllAchievements());
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/{id}")
     public ResponseEntity<Achievement> getById(@PathVariable Long id) {
         return achievementService.getById(id)
@@ -43,13 +35,10 @@ public class AchievementController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserAchievement>> getUserAchievements(@PathVariable Long userId) {
         return ResponseEntity.ok(achievementService.getUserAchievements(userId));
     }
-<<<<<<< HEAD
-=======
 
     /** POST /api/achievements — Crear logro */
     @PostMapping
@@ -94,5 +83,4 @@ public class AchievementController {
         achievementService.deleteAchievement(id);
         return ResponseEntity.noContent().build();
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

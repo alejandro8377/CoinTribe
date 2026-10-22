@@ -61,8 +61,6 @@ public class ChallengeController {
     public ResponseEntity<List<UserChallenge>> getUserChallenges(@PathVariable Long userId) {
         return ResponseEntity.ok(challengeService.getUserChallenges(userId));
     }
-<<<<<<< HEAD
-=======
 
     /** POST /api/challenges — Crear reto */
     @PostMapping
@@ -95,5 +93,4 @@ public class ChallengeController {
         challengeService.deleteChallenge(id);
         return ResponseEntity.noContent().build();
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

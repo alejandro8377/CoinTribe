@@ -51,8 +51,6 @@ public class PostController {
         Post post = postService.likePost(id, body.get("userId"));
         return ResponseEntity.ok(post);
     }
-<<<<<<< HEAD
-=======
 
     /** PUT /api/posts/{id} — Actualizar publicación */
     @PutMapping("/{id}")
@@ -74,5 +72,4 @@ public class PostController {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

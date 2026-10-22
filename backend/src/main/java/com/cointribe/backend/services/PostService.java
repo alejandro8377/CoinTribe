@@ -86,8 +86,6 @@ public class PostService {
     public Post savePost(Post post) {
         return postRepository.save(post);
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Actualizar una publicación existente.
@@ -128,5 +126,4 @@ public class PostService {
         }
         postRepository.deleteById(id);
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

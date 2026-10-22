@@ -81,8 +81,6 @@ public class UserController {
         user.setPassword(null);
         return ResponseEntity.ok(user);
     }
-<<<<<<< HEAD
-=======
 
     /** PUT /api/users/{id} — Actualización completa del usuario */
     @PutMapping("/{id}")
@@ -119,5 +117,4 @@ public class UserController {
         user.setPassword(null);
         return ResponseEntity.ok(user);
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

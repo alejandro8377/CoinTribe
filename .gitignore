@@ -12,8 +12,5 @@ backend/.idea
 coverage
 .history
 *.bak
-<<<<<<< HEAD
-=======
 .neon
 node_modules/
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)

@@ -4,10 +4,7 @@ import com.cointribe.backend.models.Course;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
 import org.springframework.http.HttpStatus;
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,8 +55,6 @@ public class CourseController {
         user.setPassword(null);
         return ResponseEntity.ok(user);
     }
-<<<<<<< HEAD
-=======
 
     /** POST /api/courses — Crear curso */
     @PostMapping
@@ -94,5 +89,4 @@ public class CourseController {
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }

@@ -89,8 +89,6 @@ public class CourseService {
     public Course saveCourse(Course course) {
         return courseRepository.save(course);
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Crear un nuevo curso.
@@ -156,5 +154,4 @@ public class CourseService {
         }
         courseRepository.deleteById(id);
     }
->>>>>>> e5646a2 (Nuevos endpoints e implementacion de base de datos en NEON)
 }
