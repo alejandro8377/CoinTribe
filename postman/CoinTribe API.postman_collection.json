@@ -1,0 +1,164 @@
+﻿{
+  "info": {
+    "name": "CoinTribe API",
+    "description": "Colecci├│n para probar los 27 endpoints del backend Spring Boot. Requiere backend en http://localhost:8080. Ejecutar las carpetas en orden; el registro crea un usuario ├║nico para cada corrida.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "email", "value": "" },
+    { "key": "password", "value": "CoinTribe123" },
+    { "key": "userId", "value": "1" },
+    { "key": "courseId", "value": "1" },
+    { "key": "challengeId", "value": "1" },
+    { "key": "postId", "value": "1" },
+    { "key": "coinId", "value": "1" },
+    { "key": "tema", "value": "Bases" }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Registrar usuario",
+          "event": [
+            { "listen": "prerequest", "script": { "type": "text/javascript", "exec": ["pm.collectionVariables.set('email', 'postman-' + Date.now() + '@cointribe.test');"] } },
+            { "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Usuario creado', function () { pm.response.to.have.status(201); });", "const data = pm.response.json();", "pm.collectionVariables.set('userId', data.id);"] } }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Usuario Postman\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/users/register"
+          }
+        },
+        {
+          "name": "Iniciar sesi├│n",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Login correcto', function () { pm.response.to.have.status(200); });", "pm.collectionVariables.set('userId', pm.response.json().id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/users/login" }
+        },
+        {
+          "name": "Listar usuarios",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/users" }
+        },
+        {
+          "name": "Obtener usuario por ID",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/users/{{userId}}" }
+        },
+        {
+          "name": "Actualizar perfil",
+          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Usuario Postman Actualizado\",\n  \"meta\": 600000\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/users/{{userId}}/profile" }
+        },
+        {
+          "name": "Registrar ahorro",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"monto\": 5000\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/users/{{userId}}/ahorro" }
+        },
+        {
+          "name": "Cambiar contrase├▒a",
+          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"currentPassword\": \"{{password}}\",\n  \"newPassword\": \"CoinTribe456\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/users/{{userId}}/password" }
+        }
+      ]
+    },
+    {
+      "name": "Cursos",
+      "item": [
+        {
+          "name": "Listar cursos",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const data = pm.response.json();", "pm.test('Cursos disponibles', function () { pm.response.to.have.status(200); pm.expect(data).to.be.an('array'); });", "if (data.length) pm.collectionVariables.set('courseId', data[0].id);"] } }],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/courses" }
+        },
+        {
+          "name": "Obtener curso por ID",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/courses/{{courseId}}" }
+        },
+        {
+          "name": "Filtrar cursos por tema",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/courses/tema/{{tema}}" }
+        },
+        {
+          "name": "Actualizar progreso del curso",
+          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"progreso\": 100\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/courses/{{courseId}}/progress" }
+        },
+        {
+          "name": "Completar lecciones",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"userId\": {{userId}},\n  \"lecciones\": 1\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/courses/complete-lesson" }
+        }
+      ]
+    },
+    {
+      "name": "Retos",
+      "item": [
+        {
+          "name": "Listar retos activos",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const data = pm.response.json();", "pm.test('Retos activos', function () { pm.response.to.have.status(200); pm.expect(data).to.be.an('array'); });", "if (data.length) pm.collectionVariables.set('challengeId', data[0].id);"] } }],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/challenges" }
+        },
+        {
+          "name": "Listar todos los retos",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/challenges/all" }
+        },
+        {
+          "name": "Obtener reto por ID",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/challenges/{{challengeId}}" }
+        },
+        {
+          "name": "Unirse a un reto",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"userId\": {{userId}}\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/challenges/{{challengeId}}/join" }
+        },
+        {
+          "name": "Registrar dep├│sito en reto",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"userId\": {{userId}},\n  \"monto\": 5000\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/challenges/{{challengeId}}/deposit" }
+        },
+        {
+          "name": "Retos de un usuario",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/challenges/user/{{userId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Comunidad",
+      "item": [
+        {
+          "name": "Listar publicaciones",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const data = pm.response.json();", "pm.test('Publicaciones disponibles', function () { pm.response.to.have.status(200); pm.expect(data).to.be.an('array'); });", "if (data.length) pm.collectionVariables.set('postId', data[0].id);"] } }],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/posts" }
+        },
+        {
+          "name": "Obtener publicaci├│n por ID",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/posts/{{postId}}" }
+        },
+        {
+          "name": "Crear publicaci├│n",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Publicaci├│n creada', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('postId', pm.response.json().id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"autor\": \"Usuario Postman\",\n  \"etiqueta\": \"Ahorro\",\n  \"titulo\": \"Prueba automatizada de la comunidad\",\n  \"cuerpo\": \"Publicaci├│n creada desde la colecci├│n de Postman para validar el endpoint.\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/posts" }
+        },
+        {
+          "name": "Dar me gusta",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"userId\": {{userId}}\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/posts/{{postId}}/like" }
+        }
+      ]
+    },
+    {
+      "name": "Logros",
+      "item": [
+        { "name": "Listar logros", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/achievements" } },
+        { "name": "Logros de un usuario", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/achievements/user/{{userId}}" } }
+      ]
+    },
+    {
+      "name": "Coins",
+      "item": [
+        {
+          "name": "Listar coins",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const data = pm.response.json();", "pm.test('Coins disponibles', function () { pm.response.to.have.status(200); pm.expect(data).to.be.an('array'); });", "if (data.length) pm.collectionVariables.set('coinId', data[0].id);"] } }],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/coins" }
+        },
+        { "name": "Obtener coin por ID", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/coins/{{coinId}}" } },
+        {
+          "name": "Crear coin",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Postman Token\",\n  \"simbolo\": \"PST\",\n  \"precio\": 1.25\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/coins" }
+        }
+      ]
+    }
+  ]
+}

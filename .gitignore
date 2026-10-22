@@ -14,3 +14,4 @@ coverage
 *.bak
 .neon
 node_modules/
+dist/
