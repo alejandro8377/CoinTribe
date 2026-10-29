@@ -1,7 +1,9 @@
 package com.cointribe.backend.controllers;
 
+import com.cointribe.backend.dto.AchievementRequest;
+import com.cointribe.backend.dto.AchievementResponseDto;
+import com.cointribe.backend.dto.UserAchievementResponseDto;
 import com.cointribe.backend.models.Achievement;
-import com.cointribe.backend.models.UserAchievement;
 import com.cointribe.backend.services.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/achievements")
@@ -24,57 +25,57 @@ public class AchievementController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Achievement>> getAll() {
-        return ResponseEntity.ok(achievementService.getAllAchievements());
+    public ResponseEntity<List<AchievementResponseDto>> getAll() {
+        return ResponseEntity.ok(achievementService.getAllAchievements().stream()
+                .map(AchievementResponseDto::from)
+                .toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Achievement> getById(@PathVariable Long id) {
+    public ResponseEntity<AchievementResponseDto> getById(@PathVariable Long id) {
         return achievementService.getById(id)
+                .map(AchievementResponseDto::from)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<UserAchievement>> getUserAchievements(@PathVariable Long userId) {
-        return ResponseEntity.ok(achievementService.getUserAchievements(userId));
+    public ResponseEntity<List<UserAchievementResponseDto>> getUserAchievements(@PathVariable Long userId) {
+        return ResponseEntity.ok(achievementService.getUserAchievements(userId).stream()
+                .map(UserAchievementResponseDto::from)
+                .toList());
     }
 
     /** POST /api/achievements — Crear logro */
     @PostMapping
-    public ResponseEntity<Achievement> create(@RequestBody Map<String, Object> body) {
-        String codigo = body.get("codigo") != null ? body.get("codigo").toString() : null;
-        String icono = body.get("icono") != null ? body.get("icono").toString() : null;
-        String nombre = body.get("nombre") != null ? body.get("nombre").toString() : null;
-        String pista = body.get("pista") != null ? body.get("pista").toString() : null;
-        Double ahorroMinimo = body.get("ahorroMinimo") != null
-                ? Double.valueOf(body.get("ahorroMinimo").toString()) : null;
-        Integer leccionesMinimas = body.get("leccionesMinimas") != null
-                ? Integer.valueOf(body.get("leccionesMinimas").toString()) : null;
-        Integer retosMinimos = body.get("retosMinimos") != null
-                ? Integer.valueOf(body.get("retosMinimos").toString()) : null;
+    public ResponseEntity<AchievementResponseDto> create(@RequestBody AchievementRequest body) {
         Achievement ach = achievementService.createAchievement(
-                codigo, icono, nombre, pista, ahorroMinimo, leccionesMinimas, retosMinimos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ach);
+                body.codigo(),
+                body.icono(),
+                body.nombre(),
+                body.pista(),
+                body.ahorroMinimo(),
+                body.leccionesMinimas(),
+                body.retosMinimos()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(AchievementResponseDto.from(ach));
     }
 
     /** PUT /api/achievements/{id} — Actualizar logro */
     @PutMapping("/{id}")
-    public ResponseEntity<Achievement> update(@PathVariable Long id,
-                                              @RequestBody Map<String, Object> body) {
-        String codigo = body.get("codigo") != null ? body.get("codigo").toString() : null;
-        String icono = body.get("icono") != null ? body.get("icono").toString() : null;
-        String nombre = body.get("nombre") != null ? body.get("nombre").toString() : null;
-        String pista = body.get("pista") != null ? body.get("pista").toString() : null;
-        Double ahorroMinimo = body.get("ahorroMinimo") != null
-                ? Double.valueOf(body.get("ahorroMinimo").toString()) : null;
-        Integer leccionesMinimas = body.get("leccionesMinimas") != null
-                ? Integer.valueOf(body.get("leccionesMinimas").toString()) : null;
-        Integer retosMinimos = body.get("retosMinimos") != null
-                ? Integer.valueOf(body.get("retosMinimos").toString()) : null;
+    public ResponseEntity<AchievementResponseDto> update(@PathVariable Long id,
+                                                          @RequestBody AchievementRequest body) {
         Achievement ach = achievementService.updateAchievement(
-                id, codigo, icono, nombre, pista, ahorroMinimo, leccionesMinimas, retosMinimos);
-        return ResponseEntity.ok(ach);
+                id,
+                body.codigo(),
+                body.icono(),
+                body.nombre(),
+                body.pista(),
+                body.ahorroMinimo(),
+                body.leccionesMinimas(),
+                body.retosMinimos()
+        );
+        return ResponseEntity.ok(AchievementResponseDto.from(ach));
     }
 
     /** DELETE /api/achievements/{id} — Eliminar logro */

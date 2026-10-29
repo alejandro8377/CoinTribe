@@ -41,7 +41,7 @@ CoinTribe ayuda a mejorar hábitos de dinero mediante:
 
 | Capa | Tecnología |
 |------|------------|
-| Lenguaje | Java 21 |
+| Lenguaje | Java 25 (LTS) |
 | Framework | Spring Boot 4.x |
 | Persistencia | Spring Data JPA + Hibernate |
 | Base de datos local | H2 en memoria |
@@ -136,7 +136,7 @@ En la consola H2 usa la misma JDBC URL, usuario `sa` y contraseña en blanco.
 
 ### Requisitos
 
-- Java 21 o superior
+- Java 25 o superior
 - Acceso a internet la primera vez (Maven descarga dependencias)
 
 ### Pasos
@@ -206,6 +206,10 @@ Al iniciar (si la BD está vacía) se cargan:
 ## Endpoints — CRUD completo
 
 Base: `http://localhost:8080`
+
+Los cuerpos JSON de escritura se reciben mediante DTOs tipados en `backend/src/main/java/com/cointribe/backend/dto`.
+Los nombres de propiedades y ejemplos de esta documentación corresponden a esos DTOs; las validaciones de negocio
+se mantienen en los servicios.
 
 ### Usuarios `/api/users`
 

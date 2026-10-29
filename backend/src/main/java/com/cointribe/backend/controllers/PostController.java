@@ -1,5 +1,8 @@
 package com.cointribe.backend.controllers;
 
+import com.cointribe.backend.dto.LikePostRequest;
+import com.cointribe.backend.dto.PostRequest;
+import com.cointribe.backend.dto.PostResponseDto;
 import com.cointribe.backend.models.Post;
 import com.cointribe.backend.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -23,47 +25,50 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Post>> getAll() {
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<List<PostResponseDto>> getAll() {
+        return ResponseEntity.ok(postService.getAllPosts().stream()
+                .map(PostResponseDto::from)
+                .toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getById(@PathVariable Long id) {
+    public ResponseEntity<PostResponseDto> getById(@PathVariable Long id) {
         return postService.getById(id)
+                .map(PostResponseDto::from)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Post> create(@RequestBody Map<String, String> body) {
+    public ResponseEntity<PostResponseDto> create(@RequestBody PostRequest body) {
         Post post = postService.createPost(
-                body.get("autor"),
-                body.get("etiqueta"),
-                body.get("titulo"),
-                body.get("cuerpo")
+                body.autor(),
+                body.etiqueta(),
+                body.titulo(),
+                body.cuerpo()
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(post);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostResponseDto.from(post));
     }
 
     @PostMapping("/{id}/like")
-    public ResponseEntity<Post> like(@PathVariable Long id,
-                                     @RequestBody Map<String, Long> body) {
-        Post post = postService.likePost(id, body.get("userId"));
-        return ResponseEntity.ok(post);
+    public ResponseEntity<PostResponseDto> like(@PathVariable Long id,
+                                                @RequestBody LikePostRequest body) {
+        Post post = postService.likePost(id, body.userId());
+        return ResponseEntity.ok(PostResponseDto.from(post));
     }
 
     /** PUT /api/posts/{id} — Actualizar publicación */
     @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@PathVariable Long id,
-                                       @RequestBody Map<String, String> body) {
+    public ResponseEntity<PostResponseDto> update(@PathVariable Long id,
+                                                  @RequestBody PostRequest body) {
         Post post = postService.updatePost(
                 id,
-                body.get("autor"),
-                body.get("etiqueta"),
-                body.get("titulo"),
-                body.get("cuerpo")
+                body.autor(),
+                body.etiqueta(),
+                body.titulo(),
+                body.cuerpo()
         );
-        return ResponseEntity.ok(post);
+        return ResponseEntity.ok(PostResponseDto.from(post));
     }
 
     /** DELETE /api/posts/{id} — Eliminar publicación */
