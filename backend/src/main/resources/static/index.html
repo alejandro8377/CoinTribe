@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoinTribe — Aprende, Ahorra y Avanza en Tribu</title>
+  <meta name="description" content="CoinTribe: Plataforma de finanzas personales con autenticación profesional, efectos visuales parallax GSAP, retos de ahorro y comunidad.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Main Navigation Bar -->
+  <header class="main-header" id="main-header">
+    <div class="header-content">
+      <div class="brand-wrapper" onclick="switchMainTab('inicio')">
+        <div class="brand-icon">🪙</div>
+        <div class="brand-info">
+          <h1>CoinTribe</h1>
+          <p>Educación financiera personal & comunidad</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs in Header -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Navegación principal">
+        <button class="nav-btn active" data-target="inicio" id="nav-btn-inicio">
+          ✨ Inicio & Parallax
+        </button>
+        <button class="nav-btn" data-target="dashboard" id="nav-btn-dashboard">
+          📊 Mi Panel
+        </button>
+        <button class="nav-btn" data-target="courses" id="nav-btn-courses">
+          📚 Cursos
+        </button>
+        <button class="nav-btn" data-target="challenges" id="nav-btn-challenges">
+          🎯 Retos de Ahorro
+        </button>
+        <button class="nav-btn" data-target="tribu" id="nav-btn-tribu">
+          💬 Tribu
+        </button>
+        <button class="nav-btn" data-target="achievements" id="nav-btn-achievements">
+          🏆 Logros
+        </button>
+        <button class="nav-btn" data-target="coins" id="nav-btn-coins">
+          🪙 Mercado
+        </button>
+      </nav>
+
+      <!-- Auth Header Controls -->
+      <div class="header-actions">
+        <!-- Logged Out State -->
+        <div class="auth-buttons-group" id="header-logged-out">
+          <button class="btn-secondary btn-sm" onclick="openAuthModal('login')">
+            Iniciar Sesión
+          </button>
+          <button class="btn-primary btn-sm" onclick="openAuthModal('register')">
+            Registrarse ✨
+          </button>
+        </div>
+
+        <!-- Logged In State -->
+        <div class="auth-buttons-group" id="header-logged-in" style="display: none;">
+          <div class="user-badge-pill" id="user-badge" onclick="openSwitchUserModal()" title="Haz clic para cambiar usuario">
+            <div class="user-avatar" id="current-user-avatar">A</div>
+            <div class="user-text-info">
+              <span class="user-name" id="current-user-name">Usuario</span>
+              <span class="user-level-tag" id="current-user-level">Nivel 1</span>
+            </div>
+          </div>
+          <button class="btn-icon-round" onclick="logout()" title="Cerrar Sesión" aria-label="Cerrar Sesión">
+            🚪
+          </button>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="btn-icon-round" id="btn-theme-toggle" aria-label="Cambiar tema">
+          ☀️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       PESTAÑA 1: INICIO & EXPERIENCIA PARALLAX GSAP
+       ========================================================================= -->
+  <section class="main-tab-view active" id="view-inicio">
+    <div class="hero-parallax-section" id="hero-section">
+      <div class="hero-pill-badge" id="hero-badge">
+        <span>✨</span> Experiencia Visual Parallax & Gamificación
+      </div>
+      
+      <h1 class="hero-title-main" id="hero-heading">
+        Aprende, Ahorra y <br>
+        <span class="gradient-text">Avanza en Tribu</span>
+      </h1>
+
+      <p class="hero-subtext" id="hero-sub">
+        Domina tus hábitos financieros con retroalimentación visual continua, retos compartidos y progreso en tiempo real. Haz scroll para vivir la experiencia interactiva.
+      </p>
+
+      <div class="hero-cta-buttons" id="hero-ctas">
+        <button class="btn-primary" onclick="handleDashboardAccess()">
+          Ir a Mi Panel de Ahorro 🚀
+        </button>
+        <button class="btn-secondary" onclick="openAuthModal('login')">
+          🔐 Iniciar Sesión / Registro
+        </button>
+      </div>
+
+      <!-- Expanding Image Frame on Scroll via GSAP -->
+      <div class="expand-image-wrapper" id="hero-expand-wrapper">
+        <div class="floating-badge floating-badge-top-left" id="hero-float-1">
+          <span class="badge-icon">🪙</span>
+          <div>
+            <div class="badge-title">Moneda Tribal</div>
+            <div class="badge-val" id="float-badge-savings">$500.000 Meta</div>
+          </div>
+        </div>
+
+        <div class="floating-badge floating-badge-bottom-right" id="hero-float-2">
+          <span class="badge-icon">🔥</span>
+          <div>
+            <div class="badge-title">Racha Activa</div>
+            <div class="badge-val">Comunidad CoinTribe</div>
+          </div>
+        </div>
+
+        <div class="expand-image-container" id="hero-expand-container">
+          <img src="images/hero.jpg" alt="CoinTribe Holographic Coin" class="parallax-img" id="hero-parallax-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- Parallax Feature Strips -->
+    <div class="app-container">
+      <!-- Strip 1: Academy -->
+      <div class="parallax-strip-section" id="strip-academy">
+        <div class="strip-text-content">
+          <span class="card-tag tag-inversion">🎓 Academia Financiera</span>
+          <h3>Educación Práctica que Transforma Hábitos</h3>
+          <p>Lecciones interactivas de menos de 5 minutos sobre presupuesto 50/30/20, fondos de emergencia e inversiones indexadas a largo plazo.</p>
+          
+          <ul class="strip-feature-list">
+            <li><span class="check-icon">✓</span> Progreso paso a paso con seguimiento visual</li>
+            <li><span class="check-icon">✓</span> Multiplica tus conocimientos y sube de nivel</li>
+            <li><span class="check-icon">✓</span> Respaldado por el sistema de datos CoinTribe</li>
+          </ul>
+
+          <button class="btn-primary" onclick="switchMainTab('courses')">
+            Explorar Cursos →
+          </button>
+        </div>
+
+        <div class="strip-img-wrapper" id="academy-img-container">
+          <img src="images/academy.jpg" alt="Academia Financiera" class="parallax-strip-img" id="academy-parallax-img">
+        </div>
+      </div>
+
+      <!-- Strip 2: Community -->
+      <div class="parallax-strip-section reversed" id="strip-community">
+        <div class="strip-text-content">
+          <span class="card-tag tag-ahorro">👥 Retos & Comunidad</span>
+          <h3>El Poder de Avanzar Acompañado</h3>
+          <p>Unirte a retos colectivos aumenta 3 veces la probabilidad de cumplir tus metas. Comparte aprendizajes y celebra cada logro con la tribu.</p>
+
+          <ul class="strip-feature-list">
+            <li><span class="check-icon">✓</span> Retos de ahorro de 7, 30 y 90 días con depósitos semanales</li>
+            <li><span class="check-icon">✓</span> Foro social interactivo con sistema de "Me gusta"</li>
+            <li><span class="check-icon">✓</span> Desbloqueo de insignias y medallas de honor</li>
+          </ul>
+
+          <button class="btn-secondary" onclick="switchMainTab('challenges')">
+            Participar en Retos →
+          </button>
+        </div>
+
+        <div class="strip-img-wrapper" id="community-img-container">
+          <img src="images/community.jpg" alt="Comunidad CoinTribe" class="parallax-strip-img" id="community-parallax-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PESTAÑA 2: MI PANEL DE CONTROL (DASHBOARD)
+       ========================================================================= -->
+  <section class="main-tab-view" id="view-dashboard" style="display: none;">
+    <div class="app-container">
+
+      <!-- Premium Glassmorphic Dashboard Card -->
+      <div class="dashboard-hero-card">
+        <div class="dash-card-header">
+          <div class="dash-card-title-box">
+            <div class="dash-glow-pill">🎯 Mi Espacio Financiero</div>
+            <h2>Panel de Control Personal</h2>
+            <p>Gestiona tu capital, abona a tus metas y visualiza tu ritmo de ahorro en tiempo real.</p>
+          </div>
+          <div class="dash-card-actions">
+            <button class="btn-primary btn-glow" onclick="openModal('modal-add-ahorro')">
+              + Depositar Ahorro
+            </button>
+            <button class="btn-secondary" onclick="openModal('modal-update-goal')">
+              ✏️ Modificar Meta
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card metric-primary">
+            <div class="metric-top">
+              <span class="metric-icon">💰</span>
+              <span class="metric-title">Ahorro Acumulado</span>
+            </div>
+            <div class="metric-val text-emerald" id="stat-savings">$0</div>
+            <div class="metric-sub">Fondos disponibles en tu cuenta</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-top">
+              <span class="metric-icon">🎯</span>
+              <span class="metric-title">Meta Establecida</span>
+            </div>
+            <div class="metric-val" id="stat-goal">$0</div>
+            <div class="metric-sub">Objetivo financiero del periodo</div>
+          </div>
+
+          <div class="metric-card metric-gold">
+            <div class="metric-top">
+              <span class="metric-icon">📈</span>
+              <span class="metric-title">Cumplimiento</span>
+            </div>
+            <div class="metric-val text-gold" id="stat-percentage">0%</div>
+            <div class="metric-sub">Del total proyectado</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-top">
+              <span class="metric-icon">🎓</span>
+              <span class="metric-title">Lecciones Completadas</span>
+            </div>
+            <div class="metric-val text-indigo" id="stat-lessons">0</div>
+            <div class="metric-sub" id="stat-user-level-label">Nivel 1</div>
+          </div>
+        </div>
+
+        <!-- Progress Bar with Interactive Indicators -->
+        <div class="dash-progress-wrapper">
+          <div class="dash-progress-header">
+            <span class="dash-progress-title">Progreso hacia la Meta</span>
+            <span class="dash-progress-status" id="stat-progress-label">0% alcanzado</span>
+          </div>
+          <div class="progress-track-premium">
+            <div class="progress-fill-premium" id="goal-progress-bar" style="width: 0%;"></div>
+          </div>
+          <div class="progress-milestones">
+            <span>$0</span>
+            <span>25%</span>
+            <span>50%</span>
+            <span>75%</span>
+            <span id="milestone-goal-label">Meta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Deposit Presets -->
+      <div class="quick-deposit-banner">
+        <div class="quick-deposit-info">
+          <h4>⚡ Depósito Rápido de Ahorro</h4>
+          <p>Añade un aporte directo con un solo clic:</p>
+        </div>
+        <div class="quick-preset-buttons">
+          <button class="btn-preset" onclick="quickAddSavings(10000)">+$10.000</button>
+          <button class="btn-preset" onclick="quickAddSavings(20000)">+$20.000</button>
+          <button class="btn-preset" onclick="quickAddSavings(50000)">+$50.000</button>
+          <button class="btn-preset" onclick="quickAddSavings(100000)">+$100.000</button>
+        </div>
+      </div>
+
+      <!-- Dashboard Sections: Challenges In Progress & Courses -->
+      <div class="section-header" style="margin-top: 40px;">
+        <h3>🎯 Mis Retos en Curso</h3>
+        <button class="btn-secondary btn-sm" onclick="switchMainTab('challenges')">Ver todos los retos →</button>
+      </div>
+      <div class="cards-grid" id="my-challenges-list" style="margin-bottom: 40px;">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="section-header">
+        <h3>📚 Cursos Recomendados</h3>
+        <button class="btn-secondary btn-sm" onclick="switchMainTab('courses')">Ir a la Academia →</button>
+      </div>
+      <div class="cards-grid" id="courses-list-preview">
+        <!-- Injected by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PESTAÑA 3: CURSOS
+       ========================================================================= -->
+  <section class="main-tab-view" id="view-courses" style="display: none;">
+    <div class="app-container">
+      <div class="page-title-banner">
+        <span class="card-tag tag-inversion">📚 Formación Continua</span>
+        <h2>Academia de Educación Financiera</h2>
+        <p>Aprende conceptos fundamentales y ponlos en práctica para transformar tu relación con el dinero.</p>
+      </div>
+      <div class="cards-grid" id="courses-list">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PESTAÑA 4: RETOS DE AHORRO
+       ========================================================================= -->
+  <section class="main-tab-view" id="view-challenges" style="display: none;">
+    <div class="app-container">
+      <div class="page-title-banner">
+        <span class="card-tag tag-ahorro">🎯 Retos Colectivos</span>
+        <h2>Retos Comunitarios de Ahorro</h2>
+        <p>Acepta desafíos diseñados para crear hábitos consistentes. Aporta periódicamente y celebra cada victoria con la tribu.</p>
+      </div>
+      <div class="cards-grid" id="challenges-list">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PESTAÑA 5: TRIBU (FORO)
+       ========================================================================= -->
+  <section class="main-tab-view" id="view-tribu" style="display: none;">
+    <div class="app-container">
+      <div class="page-title-banner" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="card-tag tag-bases">💬 Muro Social</span>
+          <h2>Foro de la Tribu CoinTribe</h2>
+          <p>Comparte tus experiencias de ahorro, consulta dudas y apoya a otros miembros.</p>
+        </div>
+        <button class="btn-primary" onclick="openModal('modal-create-post')">
+          ✍️ Nueva Publicación
+        </button>
+      </div>
+      <div id="posts-list" style="max-width: 860px; margin: 0 auto;">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PESTAÑA 6: LOGROS
+       ========================================================================= -->
+  <section class="main-tab-view" id="view-achievements" style="display: none;">
+    <div class="app-container">
+      <div class="page-title-banner">
+        <span class="card-tag tag-ahorro">🏆 Gamificación</span>
+        <h2>Vitrina de Medallas y Logros</h2>
+        <p>Desbloquea insignias exclusivas completando cursos, retos y alcanzando tus objetivos de ahorro.</p>
+      </div>
+      <div class="achievements-grid" id="achievements-list">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PESTAÑA 7: MERCADO
+       ========================================================================= -->
+  <section class="main-tab-view" id="view-coins" style="display: none;">
+    <div class="app-container">
+      <div class="page-title-banner">
+        <span class="card-tag tag-bases">🪙 Monedas & Criptoactivos</span>
+        <h2>Mercado y Activos de Inversión</h2>
+        <p>Sigue las cotizaciones de referencia para tus metas de diversificación patrimonial.</p>
+      </div>
+      <div class="coins-table-wrapper">
+        <table class="crypto-table" id="coins-table">
+          <thead>
+            <tr>
+              <th>Activo</th>
+              <th>Símbolo</th>
+              <th>Precio de Referencia</th>
+              <th>Tendencia</th>
+            </tr>
+          </thead>
+          <tbody id="coins-table-body">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       MODAL: AUTENTICACIÓN PROFESIONAL (LOGIN / REGISTRO)
+       ========================================================================= -->
+  <div class="modal-overlay" id="modal-auth">
+    <div class="modal-card auth-modal-card">
+      <div class="modal-header">
+        <div class="auth-modal-brand">
+          <div class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🪙</div>
+          <h3>CoinTribe</h3>
+        </div>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <!-- Auth Tabs Switcher -->
+      <div class="auth-tab-switch">
+        <button class="auth-tab-btn active" id="auth-tab-btn-login" onclick="setAuthTab('login')">
+          Iniciar Sesión
+        </button>
+        <button class="auth-tab-btn" id="auth-tab-btn-register" onclick="setAuthTab('register')">
+          Crear Cuenta
+        </button>
+      </div>
+
+      <!-- Demo Account Shortcut -->
+      <div class="demo-account-box">
+        <div class="demo-info">
+          <span>🚀 <strong>Cuenta de prueba:</strong></span>
+          <code style="color: var(--emerald-400);">admin@cointribe.com</code>
+        </div>
+        <button type="button" class="btn-demo-fill" onclick="fillDemoCredentials()">
+          Autocompletar
+        </button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="form-login" onsubmit="submitLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Correo Electrónico</label>
+          <input type="email" id="login-email" class="form-input" placeholder="tu@email.com" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Contraseña</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+          Ingresar a CoinTribe 🚀
+        </button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="form-register" style="display: none;" onsubmit="submitRegister(event)">
+        <div class="form-group">
+          <label class="form-label" for="register-name">Nombre Completo</label>
+          <input type="text" id="register-name" class="form-input" placeholder="Ej: Daniel Rodríguez" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="register-email">Correo Electrónico</label>
+          <input type="email" id="register-email" class="form-input" placeholder="tu@email.com" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="register-password">Contraseña</label>
+          <input type="password" id="register-password" class="form-input" placeholder="Crea una contraseña" required autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+          Crear Mi Cuenta Gratis ✨
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: AGREGAR AHORRO -->
+  <div class="modal-overlay" id="modal-add-ahorro">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Depositar a tu Ahorro</h3>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="form-add-ahorro" onsubmit="submitAddAhorro(event)">
+        <div class="form-group">
+          <label class="form-label" for="ahorro-monto-input">Monto a depositar ($ COP)</label>
+          <input type="number" step="1000" min="1000" id="ahorro-monto-input" class="form-input" placeholder="Ej: 50000" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">
+          Confirmar Depósito 💰
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ACTUALIZAR META -->
+  <div class="modal-overlay" id="modal-update-goal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Definir Nueva Meta de Ahorro</h3>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="form-update-goal" onsubmit="submitUpdateGoal(event)">
+        <div class="form-group">
+          <label class="form-label" for="nueva-meta-input">Monto de la Meta ($ COP)</label>
+          <input type="number" step="10000" min="10000" id="nueva-meta-input" class="form-input" placeholder="Ej: 1000000" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">
+          Guardar Meta 🎯
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DEPOSITAR EN RETO -->
+  <div class="modal-overlay" id="modal-deposit-challenge">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Aportar a este Reto</h3>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="form-deposit-challenge" onsubmit="submitDepositChallenge(event)">
+        <div class="form-group">
+          <label class="form-label" for="reto-deposito-monto">Monto a depositar en el reto ($ COP)</label>
+          <input type="number" step="1000" min="1000" id="reto-deposito-monto" class="form-input" placeholder="Ej: 20000" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">
+          Registrar en Reto 🚀
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CREAR PUBLICACIÓN FORO -->
+  <div class="modal-overlay" id="modal-create-post">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Compartir con la Tribu</h3>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="form-create-post" onsubmit="submitCreatePost(event)">
+        <div class="form-group">
+          <label class="form-label" for="post-titulo-input">Título</label>
+          <input type="text" id="post-titulo-input" class="form-input" placeholder="¿Qué aprendiste hoy o qué duda tienes?" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="post-etiqueta-input">Categoría / Etiqueta</label>
+          <select id="post-etiqueta-input" class="form-select">
+            <option value="Ahorro">Ahorro</option>
+            <option value="Inversión">Inversión</option>
+            <option value="Deudas">Deudas</option>
+            <option value="Pregunta">Pregunta</option>
+            <option value="Consejo">Consejo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="post-cuerpo-input">Mensaje</label>
+          <textarea id="post-cuerpo-input" class="form-textarea" rows="4" placeholder="Escribe tu experiencia o consejo para la tribu..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">
+          Publicar en el Foro 💬
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CAMBIAR USUARIO -->
+  <div class="modal-overlay" id="modal-switch-user">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Cambiar de Perfil de Usuario</h3>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="form-switch-user" onsubmit="submitSwitchUser(event)">
+        <div class="form-group">
+          <label class="form-label" for="user-switch-select">Selecciona el perfil activo</label>
+          <select id="user-switch-select" class="form-select"></select>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">
+          Activar Perfil ✨
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- App Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
