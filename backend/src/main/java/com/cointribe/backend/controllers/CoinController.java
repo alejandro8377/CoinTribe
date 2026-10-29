@@ -1,5 +1,7 @@
 package com.cointribe.backend.controllers;
 
+import com.cointribe.backend.dto.CoinRequest;
+import com.cointribe.backend.dto.CoinResponseDto;
 import com.cointribe.backend.models.Coin;
 import com.cointribe.backend.services.CoinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/coins")
@@ -23,35 +24,32 @@ public class CoinController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Coin>> getAllCoins() {
-        return ResponseEntity.ok(coinService.getAllCoins());
+    public ResponseEntity<List<CoinResponseDto>> getAllCoins() {
+        return ResponseEntity.ok(coinService.getAllCoins().stream()
+                .map(CoinResponseDto::from)
+                .toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Coin> getCoinById(@PathVariable Long id) {
+    public ResponseEntity<CoinResponseDto> getCoinById(@PathVariable Long id) {
         return coinService.getCoinById(id)
+                .map(CoinResponseDto::from)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Coin> createCoin(@RequestBody Map<String, Object> body) {
-        String name = body.get("name") != null ? body.get("name").toString() : null;
-        String symbol = body.get("symbol") != null ? body.get("symbol").toString() : null;
-        Double price = body.get("price") != null ? Double.valueOf(body.get("price").toString()) : null;
-        Coin newCoin = coinService.createCoin(name, symbol, price);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newCoin);
+    public ResponseEntity<CoinResponseDto> createCoin(@RequestBody CoinRequest body) {
+        Coin newCoin = coinService.createCoin(body.name(), body.symbol(), body.price());
+        return ResponseEntity.status(HttpStatus.CREATED).body(CoinResponseDto.from(newCoin));
     }
 
     /** PUT /api/coins/{id} — Actualizar moneda */
     @PutMapping("/{id}")
-    public ResponseEntity<Coin> updateCoin(@PathVariable Long id,
-                                           @RequestBody Map<String, Object> body) {
-        String name = body.get("name") != null ? body.get("name").toString() : null;
-        String symbol = body.get("symbol") != null ? body.get("symbol").toString() : null;
-        Double price = body.get("price") != null ? Double.valueOf(body.get("price").toString()) : null;
-        Coin coin = coinService.updateCoin(id, name, symbol, price);
-        return ResponseEntity.ok(coin);
+    public ResponseEntity<CoinResponseDto> updateCoin(@PathVariable Long id,
+                                                       @RequestBody CoinRequest body) {
+        Coin coin = coinService.updateCoin(id, body.name(), body.symbol(), body.price());
+        return ResponseEntity.ok(CoinResponseDto.from(coin));
     }
 
     /** DELETE /api/coins/{id} — Eliminar moneda */

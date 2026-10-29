@@ -1,5 +1,11 @@
 package com.cointribe.backend.controllers;
 
+import com.cointribe.backend.dto.AddSavingsRequest;
+import com.cointribe.backend.dto.ChangePasswordRequest;
+import com.cointribe.backend.dto.UpdateProfileRequest;
+import com.cointribe.backend.dto.UpdateUserRequest;
+import com.cointribe.backend.dto.UserLoginRequest;
+import com.cointribe.backend.dto.UserRegistrationRequest;
 import com.cointribe.backend.dto.UserResponseDto;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.services.UserService;
@@ -9,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -40,57 +45,51 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDto> register(@RequestBody Map<String, String> body) {
+    public ResponseEntity<UserResponseDto> register(@RequestBody UserRegistrationRequest body) {
         User user = userService.registerUser(
-                body.get("nombre"),
-                body.get("email"),
-                body.get("password")
+                body.nombre(),
+                body.email(),
+                body.password()
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDto.from(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponseDto> login(@RequestBody Map<String, String> body) {
-        User user = userService.login(body.get("email"), body.get("password"));
+    public ResponseEntity<UserResponseDto> login(@RequestBody UserLoginRequest body) {
+        User user = userService.login(body.email(), body.password());
         return ResponseEntity.ok(UserResponseDto.from(user));
     }
 
     @PutMapping("/{id}/password")
     public ResponseEntity<UserResponseDto> changePassword(@PathVariable Long id,
-                                                          @RequestBody Map<String, String> body) {
+                                                          @RequestBody ChangePasswordRequest body) {
         User user = userService.changePassword(
                 id,
-                body.get("currentPassword"),
-                body.get("newPassword")
+                body.currentPassword(),
+                body.newPassword()
         );
         return ResponseEntity.ok(UserResponseDto.from(user));
     }
 
     @PutMapping("/{id}/profile")
     public ResponseEntity<UserResponseDto> updateProfile(@PathVariable Long id,
-                                                          @RequestBody Map<String, Object> body) {
-        String nombre = body.get("nombre") != null ? body.get("nombre").toString() : null;
-        Double meta = body.get("meta") != null ? Double.valueOf(body.get("meta").toString()) : null;
-        User user = userService.updateProfile(id, nombre, meta);
+                                                          @RequestBody UpdateProfileRequest body) {
+        User user = userService.updateProfile(id, body.nombre(), body.meta());
         return ResponseEntity.ok(UserResponseDto.from(user));
     }
 
     @PostMapping("/{id}/ahorro")
     public ResponseEntity<UserResponseDto> addAhorro(@PathVariable Long id,
-                                                     @RequestBody Map<String, Double> body) {
-        User user = userService.addAhorro(id, body.get("monto"));
+                                                     @RequestBody AddSavingsRequest body) {
+        User user = userService.addAhorro(id, body.monto());
         return ResponseEntity.ok(UserResponseDto.from(user));
     }
 
     /** PUT /api/users/{id} — Actualización completa del usuario */
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> update(@PathVariable Long id,
-                                                  @RequestBody Map<String, Object> body) {
-        String nombre = body.get("nombre") != null ? body.get("nombre").toString() : null;
-        String email = body.get("email") != null ? body.get("email").toString() : null;
-        Double meta = body.get("meta") != null ? Double.valueOf(body.get("meta").toString()) : null;
-        Integer nivel = body.get("nivel") != null ? Integer.valueOf(body.get("nivel").toString()) : null;
-        User user = userService.updateUser(id, nombre, email, meta, nivel);
+                                                  @RequestBody UpdateUserRequest body) {
+        User user = userService.updateUser(id, body.nombre(), body.email(), body.meta(), body.nivel());
         return ResponseEntity.ok(UserResponseDto.from(user));
     }
 
