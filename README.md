@@ -138,7 +138,7 @@ En la consola H2 usa la misma JDBC URL, usuario `sa` y contraseña en blanco.
 ### Requisitos
 
 - Java 25 o superior
-- Acceso a internet la primera vez (Maven descarga dependencias)
+- Acceso a internet la primera vez (el Maven Wrapper descarga Maven y las dependencias; no necesitas instalar Maven globalmente)
 
 ### Pasos
 
@@ -151,8 +151,10 @@ En Windows:
 
 ```bash
 cd backend
-mvnw.cmd spring-boot:run
+.\mvnw.cmd spring-boot:run
 ```
+
+En VS Code también puedes iniciar el backend con **Terminal > Run Task > CoinTribe: Start backend**. Para depurarlo, selecciona **CoinTribe Backend** en Run and Debug y presiona F5. Ambas opciones usan el Maven Wrapper incluido, por lo que no requieren que `mvn` esté instalado en Windows.
 
 Al arrancar:
 

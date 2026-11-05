@@ -8,6 +8,9 @@
             "mainClass": "com.cointribe.backend.BackendApplication",
             "projectName": "backend",
             "cwd": "${workspaceFolder}\\backend",
+            "env": {
+                "PORT": "8080"
+            },
             "preLaunchTask": "CoinTribe: Compile backend"
         }
     ]

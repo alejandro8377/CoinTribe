@@ -16,18 +16,33 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Maven: Run CoinTribe Backend",
+			"label": "CoinTribe: Start backend",
 			"type": "process",
 			"command": "${workspaceFolder}\\backend\\mvnw.cmd",
 			"args": [
 				"spring-boot:run"
 			],
 			"options": {
-				"cwd": "${workspaceFolder}\\backend"
+				"cwd": "${workspaceFolder}\\backend",
+				"env": {
+					"PORT": "8080"
+				}
 			},
 			"isBackground": true,
-			"problemMatcher": [],
-			"group": "build"
+			"problemMatcher": [
+				{
+					"owner": "spring-boot",
+					"pattern": {
+						"regexp": "^\\[ERROR\\]\\s*(.*)$",
+						"message": 1
+					},
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "^.*:: Spring Boot ::.*$",
+						"endsPattern": "^.*Started .* in .* seconds.*$"
+					}
+				}
+			]
 		}
 	]
 }
