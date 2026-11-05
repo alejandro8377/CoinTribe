@@ -35,13 +35,13 @@ public class DataInitializer {
             userRepository.save(demo);
 
             // Cursos
-            Course c1 = new Course(null, "Presupuesto personal", "Bases",
+            Course c1 = new Course("Presupuesto personal", "Bases",
                     "Organiza tu sueldo con el método 50/30/20 y deja de llegar justo a fin de mes.", 40, 4);
-            Course c2 = new Course(null, "Fondo de emergencia", "Bases",
+            Course c2 = new Course("Fondo de emergencia", "Bases",
                     "Arma el colchón que te protege de un imprevisto sin recurrir a deudas.", 20, 4);
-            Course c3 = new Course(null, "Deudas inteligentes", "Deudas",
+            Course c3 = new Course("Deudas inteligentes", "Deudas",
                     "Aprende a priorizar y pagar deudas de forma estratégica.", 0, 3);
-            Course c4 = new Course(null, "Primeros pasos en inversión", "Inversión",
+            Course c4 = new Course("Primeros pasos en inversión", "Inversión",
                     "Fondos indexados y hábitos para invertir a largo plazo.", 10, 5);
             courseRepository.save(c1);
             courseRepository.save(c2);
@@ -49,26 +49,26 @@ public class DataInitializer {
             courseRepository.save(c4);
 
             // Retos
-            Challenge r1 = new Challenge(null, "Ahorra $50.000 esta semana",
+            Challenge r1 = new Challenge("Ahorra $50.000 esta semana",
                     "Guarda al menos $50.000 en 7 días evitando gastos hormiga.", 50000.0, 7, true);
-            Challenge r2 = new Challenge(null, "Mes sin delivery",
+            Challenge r2 = new Challenge("Mes sin delivery",
                     "Cocina en casa durante 30 días y ahorra lo que gastarías en domicilio.", 150000.0, 30, true);
-            Challenge r3 = new Challenge(null, "Fondo de emergencia inicial",
+            Challenge r3 = new Challenge("Fondo de emergencia inicial",
                     "Reúne el equivalente a un mes de gastos básicos.", 800000.0, 90, true);
             challengeRepository.save(r1);
             challengeRepository.save(r2);
             challengeRepository.save(r3);
 
             // Posts de comunidad
-            Post p1 = new Post(null, "Marta Ríos", "Presupuesto",
+            Post p1 = new Post("Marta Ríos", "Presupuesto",
                     "¿Cómo llevan el control de gastos hormiga?",
                     "Empecé a anotar cada café y snack. Me sorprendió cuánto se va. ¿Alguien usa alguna app recomendada?",
                     12, null);
-            Post p2 = new Post(null, "Diego Herrera", "Ahorro",
+            Post p2 = new Post("Diego Herrera", "Ahorro",
                     "Completé mi primer reto de ahorro",
                     "Logré ahorrar $50.000 en una semana evitando el delivery. ¡Se puede!",
                     24, null);
-            Post p3 = new Post(null, "Luisa Gómez", "Inversión",
+            Post p3 = new Post("Luisa Gómez", "Inversión",
                     "Consejos para empezar a invertir a largo plazo",
                     "Soy principiante y me gustaría invertir sin arriesgar de más. ¿Por dónde recomiendan empezar?",
                     9, null);
@@ -77,15 +77,15 @@ public class DataInitializer {
             postRepository.save(p3);
 
             // Logros
-            Achievement a1 = new Achievement(null, "primer-deposito", "🪙", "Primer depósito",
+            Achievement a1 = new Achievement("primer-deposito", "🪙", "Primer depósito",
                     "Registra tu primer depósito", 1.0, null, null);
-            Achievement a2 = new Achievement(null, "mitad-meta", "🌱", "Vas por la mitad",
+            Achievement a2 = new Achievement("mitad-meta", "🌱", "Vas por la mitad",
                     "Llega al 50% de tu meta del mes", 250000.0, null, null);
-            Achievement a3 = new Achievement(null, "tres-retos", "🤝", "Tribu activa",
+            Achievement a3 = new Achievement("tres-retos", "🤝", "Tribu activa",
                     "Únete a tres retos", null, null, 3);
-            Achievement a4 = new Achievement(null, "meta-cumplida", "🏆", "Meta del mes",
+            Achievement a4 = new Achievement("meta-cumplida", "🏆", "Meta del mes",
                     "Completa el 100% de tu meta", 500000.0, null, null);
-            Achievement a5 = new Achievement(null, "estudiante", "📚", "Estudiante constante",
+            Achievement a5 = new Achievement("estudiante", "📚", "Estudiante constante",
                     "Completa al menos 5 lecciones", null, 5, null);
             achievementRepository.save(a1);
             achievementRepository.save(a2);
@@ -94,8 +94,8 @@ public class DataInitializer {
             achievementRepository.save(a5);
 
             // Coins de ejemplo
-            coinRepository.save(new Coin(null, "Bitcoin", "BTC", 65000.0));
-            coinRepository.save(new Coin(null, "Ethereum", "ETH", 3500.0));
+            coinRepository.save(new Coin("Bitcoin", "BTC", 65000.0));
+            coinRepository.save(new Coin("Ethereum", "ETH", 3500.0));
         };
     }
 }

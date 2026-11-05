@@ -1,6 +1,7 @@
 package com.cointribe.backend.services;
 
 import com.cointribe.backend.exceptions.BusinessException;
+import com.cointribe.backend.exceptions.RecursoNoEncontradoException;
 import com.cointribe.backend.models.Course;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.repositories.CourseRepository;
@@ -56,7 +57,7 @@ public class CourseService {
         }
 
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new BusinessException("Curso no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Curso no encontrado."));
 
         // Solo se permite avanzar o mantener; no retroceder (regla adicional de negocio)
         if (course.getProgreso() != null && nuevoProgreso < course.getProgreso()) {
@@ -79,7 +80,7 @@ public class CourseService {
             throw new BusinessException("Debes completar al menos una lección.");
         }
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         user.setLeccionesCompletadas(user.getLeccionesCompletadas() + leccionesAdicionales);
         User saved = userRepository.save(user);
         achievementService.evaluateAndUnlock(saved);
@@ -118,7 +119,7 @@ public class CourseService {
     public Course updateCourse(Long id, String titulo, String tema, String descripcion,
                                Integer totalLecciones, Integer progreso) {
         Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Curso no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Curso no encontrado."));
 
         if (titulo != null && !titulo.trim().isEmpty()) {
             course.setTitulo(titulo.trim());
@@ -150,7 +151,7 @@ public class CourseService {
     @Transactional
     public void deleteCourse(Long id) {
         if (!courseRepository.existsById(id)) {
-            throw new BusinessException("Curso no encontrado.");
+            throw new RecursoNoEncontradoException("Curso no encontrado.");
         }
         courseRepository.deleteById(id);
     }

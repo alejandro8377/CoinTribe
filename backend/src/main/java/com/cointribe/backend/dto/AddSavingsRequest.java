@@ -1,4 +1,7 @@
 package com.cointribe.backend.dto;
 
-public record AddSavingsRequest(Double monto) {
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public record AddSavingsRequest(@NotNull @Positive Double monto) {
 }

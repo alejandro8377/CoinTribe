@@ -48,6 +48,7 @@ CoinTribe ayuda a mejorar hábitos de dinero mediante:
 | Base de datos producción | PostgreSQL (Neon o Render) |
 | Build | Maven (wrapper `./mvnw`) |
 | API | REST + JSON |
+| Documentación de API | OpenAPI 3 / Swagger UI |
 | CORS | Abierto (`*`) para desarrollo |
 
 ---
@@ -84,11 +85,11 @@ Entidades principales: `User`, `Course`, `Challenge`, `UserChallenge`, `Post`, `
 
 | Campo | Valor |
 |-------|--------|
-| Nombre | Admin CoinTribe |
+| Nombre | Juan Pérez |
 | Email | `admin@cointribe.com` |
 | Contraseña | `123456` |
-| Nivel | 1 |
-| Ahorro inicial | 0 |
+| Nivel | 3 |
+| Ahorro inicial | 320000 |
 | Meta | 500000 |
 
 Login de ejemplo:
@@ -159,8 +160,11 @@ Al arrancar:
 2. Hibernate crea/actualiza tablas (`ddl-auto=update`).
 3. `DataInitializer` inserta admin, cursos, retos, posts, logros y coins de ejemplo.
 
-API: **http://localhost:8080**  
-H2 Console: **http://localhost:8080/h2-console**
+- Aplicación web: **http://localhost:8080/**
+- API: **http://localhost:8080/api**
+- H2 Console: **http://localhost:8080/h2-console**
+
+La interfaz está incluida en `backend/src/main/resources/static` y Spring Boot la sirve junto con la API. Abre la aplicación desde `http://localhost:8080/` (no desde el archivo `index.html`) para que las solicitudes del frontend lleguen al mismo servidor y origen.
 
 Para empaquetar JAR:
 
@@ -177,14 +181,15 @@ Al iniciar (si la BD está vacía) se cargan:
 
 **Cursos**
 
-- Finanzas básicas (tema: Ahorro)
-- Presupuesto personal (tema: Presupuesto)
-- Introducción a la inversión (tema: Inversión)
+- Presupuesto personal (tema: Bases)
+- Fondo de emergencia (tema: Bases)
+- Deudas inteligentes (tema: Deudas)
+- Primeros pasos en inversión (tema: Inversión)
 
 **Retos**
 
-- Ahorra $50.000 en 7 días (meta 50000, 7 días)
-- Sin delivery 14 días (meta 100000, 14 días)
+- Ahorra $50.000 esta semana (meta 50000, 7 días)
+- Mes sin delivery (meta 150000, 30 días)
 - Fondo de emergencia inicial (meta 800000, 90 días)
 
 **Posts** de comunidad (Marta, Diego, Luisa) sobre presupuesto, ahorro e inversión.
@@ -208,8 +213,12 @@ Al iniciar (si la BD está vacía) se cargan:
 Base: `http://localhost:8080`
 
 Los cuerpos JSON de escritura se reciben mediante DTOs tipados en `backend/src/main/java/com/cointribe/backend/dto`.
-Los nombres de propiedades y ejemplos de esta documentación corresponden a esos DTOs; las validaciones de negocio
-se mantienen en los servicios.
+Los nombres de propiedades y ejemplos de esta documentación corresponden a esos DTOs. Bean Validation comprueba
+los datos de entrada en la API y los servicios conservan las reglas de negocio.
+
+La documentación interactiva está disponible en **http://localhost:8080/swagger-ui/index.html** y el documento
+OpenAPI en **http://localhost:8080/v3/api-docs**. Las entidades heredan de `BaseEntity`, que centraliza el ID
+y las marcas de auditoría `createdAt` y `updatedAt`.
 
 ### Usuarios `/api/users`
 
@@ -394,6 +403,8 @@ Content-Type: application/json
 Además, `AchievementService` evalúa ahorro, lecciones y retos y desbloquea logros automáticamente.
 
 Errores de negocio devuelven respuesta controlada vía `BusinessException` + `GlobalExceptionHandler`.
+Los recursos inexistentes responden HTTP 404 mediante `RecursoNoEncontradoException`, y los errores de Bean
+Validation responden HTTP 400 con detalles por campo.
 
 ---
 

@@ -1,6 +1,7 @@
 package com.cointribe.backend.services;
 
 import com.cointribe.backend.exceptions.BusinessException;
+import com.cointribe.backend.exceptions.RecursoNoEncontradoException;
 import com.cointribe.backend.models.Achievement;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.models.UserAchievement;
@@ -124,7 +125,7 @@ public class AchievementService {
     public Achievement updateAchievement(Long id, String codigo, String icono, String nombre, String pista,
                                          Double ahorroMinimo, Integer leccionesMinimas, Integer retosMinimos) {
         Achievement ach = achievementRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Logro no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Logro no encontrado."));
 
         if (codigo != null && !codigo.trim().isEmpty()) {
             achievementRepository.findByCodigo(codigo.trim()).ifPresent(existing -> {
@@ -161,7 +162,7 @@ public class AchievementService {
     @Transactional
     public void deleteAchievement(Long id) {
         if (!achievementRepository.existsById(id)) {
-            throw new BusinessException("Logro no encontrado.");
+            throw new RecursoNoEncontradoException("Logro no encontrado.");
         }
         achievementRepository.deleteById(id);
     }

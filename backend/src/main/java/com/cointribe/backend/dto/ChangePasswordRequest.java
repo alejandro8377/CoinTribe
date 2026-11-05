@@ -1,4 +1,10 @@
 package com.cointribe.backend.dto;
 
-public record ChangePasswordRequest(String currentPassword, String newPassword) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record ChangePasswordRequest(
+        @NotBlank String currentPassword,
+        @NotBlank @Size(min = 6) String newPassword
+) {
 }

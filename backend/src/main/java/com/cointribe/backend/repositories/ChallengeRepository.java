@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     List<Challenge> findByActivoTrue();
+    List<Challenge> findByDuracionDiasLessThanEqual(Integer duracionDias);
+    List<Challenge> findByMetaAhorroLessThanEqual(Double metaAhorro);
 }

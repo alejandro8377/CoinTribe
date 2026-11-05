@@ -15,7 +15,6 @@ class UserResponseDtoTest {
     void fromCopiesPublicUserFieldsAndExcludesPassword() {
         LocalDateTime fechaRegistro = LocalDateTime.of(2026, 10, 28, 12, 0);
         User user = new User(
-                7L,
                 "Alejandro",
                 "alejandro@example.com",
                 "secret-password",
@@ -27,6 +26,7 @@ class UserResponseDtoTest {
                 fechaRegistro,
                 true
         );
+        user.setId(7L);
 
         UserResponseDto dto = UserResponseDto.from(user);
 

@@ -1,6 +1,7 @@
 package com.cointribe.backend.services;
 
 import com.cointribe.backend.exceptions.BusinessException;
+import com.cointribe.backend.exceptions.RecursoNoEncontradoException;
 import com.cointribe.backend.models.Challenge;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.models.UserChallenge;
@@ -52,9 +53,9 @@ public class ChallengeService {
     @Transactional
     public UserChallenge joinChallenge(Long userId, Long challengeId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         Challenge challenge = challengeRepository.findById(challengeId)
-                .orElseThrow(() -> new BusinessException("Reto no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Reto no encontrado."));
 
         if (!Boolean.TRUE.equals(challenge.getActivo())) {
             throw new BusinessException("Este reto ya no está activo.");
@@ -161,7 +162,7 @@ public class ChallengeService {
     public Challenge updateChallenge(Long id, String titulo, String descripcion,
                                      Double metaAhorro, Integer duracionDias, Boolean activo) {
         Challenge challenge = challengeRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Reto no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Reto no encontrado."));
 
         if (titulo != null && !titulo.trim().isEmpty()) {
             challenge.setTitulo(titulo.trim());
@@ -193,7 +194,7 @@ public class ChallengeService {
     @Transactional
     public void deleteChallenge(Long id) {
         if (!challengeRepository.existsById(id)) {
-            throw new BusinessException("Reto no encontrado.");
+            throw new RecursoNoEncontradoException("Reto no encontrado.");
         }
         challengeRepository.deleteById(id);
     }

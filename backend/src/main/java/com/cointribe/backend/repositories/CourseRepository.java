@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByTemaIgnoreCase(String tema);
+    List<Course> findByTituloContainingIgnoreCase(String titulo);
+    List<Course> findByProgresoGreaterThanEqual(Integer progreso);
 }

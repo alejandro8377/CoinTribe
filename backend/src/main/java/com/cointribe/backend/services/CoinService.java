@@ -1,6 +1,7 @@
 package com.cointribe.backend.services;
 
 import com.cointribe.backend.exceptions.BusinessException;
+import com.cointribe.backend.exceptions.RecursoNoEncontradoException;
 import com.cointribe.backend.models.Coin;
 import com.cointribe.backend.repositories.CoinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class CoinService {
         if (symbol == null || symbol.trim().isEmpty()) {
             throw new BusinessException("El símbolo de la moneda es obligatorio.");
         }
+        if (price != null && price < 0) {
+            throw new BusinessException("El precio no puede ser negativo.");
+        }
         Coin coin = new Coin();
         coin.setName(name.trim());
         coin.setSymbol(symbol.trim().toUpperCase());
@@ -50,7 +54,7 @@ public class CoinService {
     @Transactional
     public Coin updateCoin(Long id, String name, String symbol, Double price) {
         Coin coin = coinRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Moneda no encontrada."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Moneda no encontrada."));
         if (name != null && !name.trim().isEmpty()) {
             coin.setName(name.trim());
         }
@@ -69,7 +73,7 @@ public class CoinService {
     @Transactional
     public void deleteCoin(Long id) {
         if (!coinRepository.existsById(id)) {
-            throw new BusinessException("Moneda no encontrada.");
+            throw new RecursoNoEncontradoException("Moneda no encontrada.");
         }
         coinRepository.deleteById(id);
     }

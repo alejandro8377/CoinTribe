@@ -3,6 +3,7 @@ package com.cointribe.backend.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -12,13 +13,10 @@ import java.time.LocalDateTime;
         @UniqueConstraint(columnNames = {"user_id", "achievement_id"})
 })
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAchievement {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserAchievement extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")

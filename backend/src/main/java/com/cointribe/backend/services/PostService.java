@@ -1,6 +1,7 @@
 package com.cointribe.backend.services;
 
 import com.cointribe.backend.exceptions.BusinessException;
+import com.cointribe.backend.exceptions.RecursoNoEncontradoException;
 import com.cointribe.backend.models.Post;
 import com.cointribe.backend.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class PostService {
             throw new BusinessException("Debes estar autenticado para dar me gusta.");
         }
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException("Publicación no encontrada."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Publicación no encontrada."));
 
         String key = userId + ":" + postId;
         if (likesRegistrados.contains(key)) {
@@ -93,7 +94,7 @@ public class PostService {
     @Transactional
     public Post updatePost(Long id, String autor, String etiqueta, String titulo, String cuerpo) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Publicación no encontrada."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Publicación no encontrada."));
 
         if (autor != null && !autor.trim().isEmpty()) {
             post.setAutor(autor.trim());
@@ -122,7 +123,7 @@ public class PostService {
     @Transactional
     public void deletePost(Long id) {
         if (!postRepository.existsById(id)) {
-            throw new BusinessException("Publicación no encontrada.");
+            throw new RecursoNoEncontradoException("Publicación no encontrada.");
         }
         postRepository.deleteById(id);
     }

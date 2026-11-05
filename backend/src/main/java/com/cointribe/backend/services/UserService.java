@@ -1,6 +1,7 @@
 package com.cointribe.backend.services;
 
 import com.cointribe.backend.exceptions.BusinessException;
+import com.cointribe.backend.exceptions.RecursoNoEncontradoException;
 import com.cointribe.backend.models.User;
 import com.cointribe.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +105,7 @@ public class UserService {
     @Transactional
     public User changePassword(Long userId, String currentPassword, String newPassword) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         if (!user.getPassword().equals(currentPassword)) {
             throw new BusinessException("La contraseña actual no es correcta.");
         }
@@ -122,7 +123,7 @@ public class UserService {
     @Transactional
     public User updateProfile(Long userId, String nombre, Double meta) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         if (nombre != null && !nombre.trim().isEmpty()) {
             user.setNombre(nombre.trim());
         }
@@ -138,7 +139,7 @@ public class UserService {
     @Transactional
     public User addAhorro(Long userId, Double monto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         if (monto == null || monto <= 0) {
             throw new BusinessException("El monto a depositar debe ser mayor a cero.");
         }
@@ -154,7 +155,7 @@ public class UserService {
     @Transactional
     public User updateUser(Long userId, String nombre, String email, Double meta, Integer nivel) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         if (nombre != null && !nombre.trim().isEmpty()) {
             user.setNombre(nombre.trim());
         }
@@ -186,7 +187,7 @@ public class UserService {
     @Transactional
     public User deactivateUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         user.setActivo(false);
         return userRepository.save(user);
     }
@@ -197,7 +198,7 @@ public class UserService {
     @Transactional
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new BusinessException("Usuario no encontrado.");
+            throw new RecursoNoEncontradoException("Usuario no encontrado.");
         }
         userRepository.deleteById(userId);
     }
@@ -208,7 +209,7 @@ public class UserService {
     @Transactional
     public User activateUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         user.setActivo(true);
         return userRepository.save(user);
     }
