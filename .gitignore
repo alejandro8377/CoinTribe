@@ -5,7 +5,10 @@ backend/target
 backend/.idea
 .idea
 *.iml
-.vscode
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
 *.tmp
 *.swp
 .fleet
